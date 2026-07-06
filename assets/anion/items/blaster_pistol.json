@@ -1,6 +1,6 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "anion:item/blaster_pistol"
+	"type": "minecraft:model",
+	"model": "anion:item/blaster_pistol"
   }
 }
