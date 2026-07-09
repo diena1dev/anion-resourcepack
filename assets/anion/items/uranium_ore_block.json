@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "anion:block/uranium_block"
+    "model": "anion:block/uranium_ore_block"
   }
 }
