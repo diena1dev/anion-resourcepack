@@ -1,0 +1,60 @@
+name: Build and Release Resource Pack
+
+on:
+  push:
+    tags:
+      - 'v*'  # triggers on tags like v1.0, v1.2.3, etc.
+  workflow_dispatch:  # allows manual triggering from the Actions tab
+
+permissions:
+  contents: write  # needed to create releases
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # pngquant is something that could be installed with further configuring (excluding certain files that are shader targets)
+      - name: Install optimization tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y optipng zip
+
+      - name: Optimize PNG textures
+        run: |
+          echo "Optimizing PNGs..."
+          find . -type f -iname "*.png" -not -path "./.git/*" | while read -r file; do
+            # pngquant is lossy, do not use (some textures are shader targets)
+            # pngquant --force --skip-if-larger --quality=80-100 --output "$file" "$file" || true
+            optipng -o4 -quiet "$file"
+          done
+          echo "PNG optimization complete."
+
+      - name: Determine pack name and version
+        id: vars
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
+          VERSION="${GITHUB_REF_NAME}"
+          echo "pack_name=${REPO_NAME}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "zip_name=${REPO_NAME}.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Package resource pack
+        run: |
+          # Zip repo root contents (not the repo folder itself),
+          # excluding VCS/workflow/meta files
+          zip -r "${{ steps.vars.outputs.zip_name }}" . \
+            -x ".git/*" \
+            -x ".github/*" \
+            -x ".gitignore" \
+            -x "*.zip"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.version }}
+          name: ${{ steps.vars.outputs.pack_name }} ${{ steps.vars.outputs.version }}
+          files: ${{ steps.vars.outputs.zip_name }}
+          #generate_release_notes: true # no need to generate release notes, these are automated updates
