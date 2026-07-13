@@ -30,7 +30,7 @@ jobs:
           else
             next=$((latest + 1))
           fi
-          echo "tag=resourcepack v${next}" >> "$GITHUB_OUTPUT"
+          echo "tag=v${next}" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
 
@@ -54,13 +54,13 @@ jobs:
       - name: Create zip
         run: |
           cd package
-          zip -r ../anion-resourcepack-${{ steps.version.outputs.tag }}.zip LICENSE.txt pack.mcmeta assets
+          zip -r ../anion-resourcepack.zip LICENSE.txt pack.mcmeta assets
 
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            "anion-resourcepack-${{ steps.version.outputs.tag }}.zip" \
+          gh release create "anion-resourcepack-${{ steps.version.outputs.tag }}" \
+            "anion-resourcepack.zip" \
             --title "${{ steps.version.outputs.tag }}" \
             --generate-notes
