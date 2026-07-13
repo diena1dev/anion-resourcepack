@@ -1,0 +1,21 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "display":  "anion:block/copper_machine_casing_display_front",
+    "wall":   "anion:block/copper_machine_casing",
+    "particle": "#wall"
+  },
+  "elements": [
+        {   "from": [ 0, 0, 0 ],
+            "to": [ 16, 16, 16 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0, 16, 16 ], "texture": "#wall", "cullface": "down" },
+                "up":    { "uv": [ 0, 0, 16, 16 ], "texture": "#wall", "cullface": "up" },
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#display", "cullface": "north" },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#wall", "cullface": "south" },
+                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#wall", "cullface": "west" },
+                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#wall", "cullface": "east" }
+            }
+        }
+    ]
+}

@@ -3025,34 +3025,34 @@
       "model": "anion:block/uranium_block"
     },
     "instrument=zombie,note=4,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_casing"
     },
     "instrument=zombie,note=4,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_casing"
     },
     "instrument=zombie,note=5,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_display"
     },
     "instrument=zombie,note=5,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_display"
     },
     "instrument=zombie,note=6,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_valve"
     },
     "instrument=zombie,note=6,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_valve"
     },
     "instrument=zombie,note=7,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_bus"
     },
     "instrument=zombie,note=7,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_bus"
     },
     "instrument=zombie,note=8,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_dataport"
     },
     "instrument=zombie,note=8,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_dataport"
     },
     "instrument=zombie,note=9,powered=false": {
       "model": "minecraft:block/note_block"

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end":  "anion:block/copper_machine_casing",
+    "side": "anion:block/copper_machine_casing_valve"
+  }
+}
