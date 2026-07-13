@@ -30,7 +30,7 @@ jobs:
           else
             next=$((latest + 1))
           fi
-          echo "tag=v${next}" >> "$GITHUB_OUTPUT"
+          echo "tag=resourcepack v${next}" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ github.token }}
 
