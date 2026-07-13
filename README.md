@@ -1,7 +1,5 @@
-it's best to symlink the resource pack in a development environment.
+main repo for the anion resource pack. all assets provided are licensed under the unlicense, allowing you to do what you wish with them.
 
-create a file named `allowed_symlinks.txt` in your `.minecraft` root directory
+my only request is that you attribute me or this repository in some small way if you use any of the assets available here. if you do not wish to leave credit in your codebase, a github star would be appreciated :)
 
-add the line `[regex].*` to it, then save.
-
-create a symlink to the resource pack's location, then restart your machine (symlinks are weird and sometimes require a restart to work properly).
+for info on how to allow symlinks for minecraft, see [resourcepack/README.md].
