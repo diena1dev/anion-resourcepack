@@ -1,0 +1,6 @@
+{
+  "parent": "anion:block/cube_emissive",
+  "textures": {
+    "all": "anion:block/null_black"
+  }
+}

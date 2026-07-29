@@ -1,0 +1,6 @@
+{
+  "parent": "anion:block/cube_emissive_all",
+  "textures": {
+    "all": "anion:block/null_purple"
+  }
+}
