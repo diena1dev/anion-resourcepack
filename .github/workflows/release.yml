@@ -60,7 +60,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "anion-resourcepack-${{ steps.version.outputs.tag }}" \
+          gh release create "${{ steps.version.outputs.tag }}" \
             "anion-resourcepack.zip" \
-            --title "${{ steps.version.outputs.tag }}" \
-            --generate-notes
+            --title "${{ steps.version.outputs.tag }}"
