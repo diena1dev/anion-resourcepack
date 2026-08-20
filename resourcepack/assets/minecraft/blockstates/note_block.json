@@ -3055,88 +3055,112 @@
       "model": "anion:block/copper_machine_dataport"
     },
     "instrument=zombie,note=9,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_conduit"
     },
     "instrument=zombie,note=9,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_machine_conduit"
     },
     "instrument=zombie,note=10,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90
     },
     "instrument=zombie,note=10,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90
     },
     "instrument=zombie,note=11,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=11,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=12,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90
     },
     "instrument=zombie,note=12,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90
     },
     "instrument=zombie,note=13,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=13,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=14,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe_vertical"
     },
     "instrument=zombie,note=14,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe_vertical"
     },
     "instrument=zombie,note=15,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe_vertical"
     },
     "instrument=zombie,note=15,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe_vertical"
     },
     "instrument=zombie,note=16,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe_junction"
     },
     "instrument=zombie,note=16,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_pipe_junction"
     },
     "instrument=zombie,note=17,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90
     },
     "instrument=zombie,note=17,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90
     },
     "instrument=zombie,note=18,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=18,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=19,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90
     },
     "instrument=zombie,note=19,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90
     },
     "instrument=zombie,note=20,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=20,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute",
+      "x": 90,
+      "y": 90
     },
     "instrument=zombie,note=21,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute"
     },
     "instrument=zombie,note=21,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute"
     },
     "instrument=zombie,note=22,powered=false": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute"
     },
     "instrument=zombie,note=22,powered=true": {
-      "model": "minecraft:block/note_block"
+      "model": "anion:block/copper_chute"
     },
     "instrument=zombie,note=23,powered=false": {
       "model": "minecraft:block/note_block"
