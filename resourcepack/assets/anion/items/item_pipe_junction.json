@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "anion:block/copper_chute"
+    "model": "anion:block/item_pipe_junction"
   }
 }
