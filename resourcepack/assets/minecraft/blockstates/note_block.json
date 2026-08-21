@@ -3115,52 +3115,40 @@
       "model": "anion:block/copper_pipe_junction"
     },
     "instrument=zombie,note=17,powered=false": {
-      "model": "anion:block/copper_chute",
-      "x": 90
+      "model": "anion:block/copper_chute"
     },
     "instrument=zombie,note=17,powered=true": {
-      "model": "anion:block/copper_chute",
-      "x": 90
+      "model": "anion:block/copper_chute"
     },
     "instrument=zombie,note=18,powered=false": {
-      "model": "anion:block/copper_chute",
-      "x": 90,
-      "y": 90
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=18,powered=true": {
-      "model": "anion:block/copper_chute",
-      "x": 90,
-      "y": 90
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=19,powered=false": {
-      "model": "anion:block/copper_chute",
-      "x": 90
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=19,powered=true": {
-      "model": "anion:block/copper_chute",
-      "x": 90
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=20,powered=false": {
-      "model": "anion:block/copper_chute",
-      "x": 90,
-      "y": 90
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=20,powered=true": {
-      "model": "anion:block/copper_chute",
-      "x": 90,
-      "y": 90
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=21,powered=false": {
-      "model": "anion:block/copper_chute"
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=21,powered=true": {
-      "model": "anion:block/copper_chute"
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=22,powered=false": {
-      "model": "anion:block/copper_chute"
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=22,powered=true": {
-      "model": "anion:block/copper_chute"
+      "model": "minecraft:block/note_block"
     },
     "instrument=zombie,note=23,powered=false": {
       "model": "minecraft:block/note_block"
