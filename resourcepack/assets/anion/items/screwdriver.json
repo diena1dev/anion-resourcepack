@@ -1,6 +1,6 @@
 {
   "model": {
 	  "type": "minecraft:model",
-	  "model": "anion:item/test_item"
+	  "model": "anion:item/screwdriver"
   }
 }
