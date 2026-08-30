@@ -1,8 +1,8 @@
 {
   "parent": "block/block",
   "textures": {
-    "display":  "anion:block/copper_machine_casing_display_front",
-    "wall":   "anion:block/copper_machine_casing",
+    "display":  "anion:block/debug/display_front",
+    "wall":   "anion:block/debug/casing",
     "particle": "#wall"
   },
   "elements": [
