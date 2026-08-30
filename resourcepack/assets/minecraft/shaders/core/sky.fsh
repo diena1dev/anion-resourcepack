@@ -20,6 +20,7 @@ in vec3 Pos;
 
 out vec4 fragColor;
 
+// TODO: reliably detect day/night cycles in worlds that must be day/night aware.
 void main() {
 
     // this gets us a color based on the distance from the center of the world.

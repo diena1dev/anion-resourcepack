@@ -21,7 +21,7 @@ void main() {
     // we get position from an outside source, which we can multiply by our ModelViewMat (which
     // uses fancy math to fix vectors to one point by cancelling out camera pitch and roll) to get
     // the same sort of Position information we would have with the vanilla sky.vsh file.
-    vec4 modPos = ModelViewMat * view;
+    vec4 modPos = modView * ModelViewMat;
 
     gl_Position = clip;   // this is where we pass our on-screen vector position.
     Pos.xyz = modPos.xyz; // this passes our corrected view through to sky.fsh.
