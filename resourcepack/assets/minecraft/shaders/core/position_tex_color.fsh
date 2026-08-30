@@ -178,29 +178,37 @@ vec3 renderStreak(float streakId, vec2 p, float time) {
 
 void main() {
 
-    // vanilla code start
-    vec4 color = texture(Sampler0, texCoord0) * vertexColor;
-
-    // this allows transparent ui elements to actually be transparent.
-    // if this check is removed, black boxes are drawn over transparent sections!
-    if (color.a == 0.0) {
-        discard;
-    }
-    
-    fragColor = color * ColorModulator;
-    // vanilla code end
-
     // this check isolates the end skybox from the rest of position_tex_color's targets.
     // ProjMat checks what projection mode the verticies are being drawn in,
     // while the color check ensures that we only target the end skybox (not the block or flame overlays).
     // the *reason* we check both is to prevent any gui color that matches
     // the end sky grey from getting the end sky shader override applied to it.
-    if (
+    //
+    // tested BEFORE the vanilla path so end sky pixels skip the Sampler0 fetch
+    // entirely - we overwrite that result anyway. neither input to this test
+    // needs the texture.
+    bool isEndSky = ProjMat[3][3] == 0.
+                 && all(lessThan(abs(vertexColor.rgb - vec3(40.0/255.0)), vec3(0.01)));
 
-        ProjMat[3][3] == 0. &&
-        all(lessThan(abs(vertexColor.rgb - vec3(40.0/255.0)), vec3(0.01)))
-    
-    ) {
+    if (!isEndSky) {
+
+        // vanilla code start
+        vec4 color = texture(Sampler0, texCoord0) * vertexColor;
+
+        // this allows transparent ui elements to actually be transparent.
+        // if this check is removed, black boxes are drawn over transparent sections!
+        if (color.a == 0.0) {
+            discard;
+        }
+
+        fragColor = color * ColorModulator;
+        // vanilla code end
+
+        return;
+
+    }
+
+    {
 
         // Shadertoy's iTime is in SECONDS. GameTime is the fraction of a
         // Minecraft day, and a day is 24000 ticks at 20 tps = 1200 seconds.
@@ -228,32 +236,62 @@ void main() {
         vec2 rotated_uv = vec2(atan(g.z, g.x) / M_PI, g.y);
 
         // 2. DEFINE THE MILKY WAY'S BASIC SHAPE
-        float bandShape = pow(1.0 - abs(rotated_uv.y), 3.0) * 0.2;
+        // pow() compiles to exp2(y * log2(x)) - two special-function-unit ops.
+        // For small integer exponents, repeated multiplies are strictly cheaper
+        // and exact. These two run for every single pixel.
+        float bandFalloff = 1.0 - abs(rotated_uv.y);
+        float bandShape = bandFalloff * bandFalloff * bandFalloff * 0.2;
+
         float coreGlow = 1.0 - smoothstep(0.0, 1.0, length(rotated_uv * vec2(0.5, 1.0)));
-        coreGlow = pow(coreGlow, 5.0) * GLOW_INTENSITY;
+        float cg2 = coreGlow * coreGlow;
+        coreGlow = cg2 * cg2 * coreGlow * GLOW_INTENSITY;
+
         float milkyWay = bandShape + coreGlow;
 
         // 3. GENERATE THE CLOUDY TEXTURES
         // These sample 3D noise along the direction itself, so they are
         // seamless everywhere on the sphere.
+        //
+        // Everything below only ever modulates bandShape, which falls off as the
+        // cube of the distance from the galactic plane. Past |g.y| = 0.72 the
+        // whole block contributes less than 1/255 to the final color, so we skip
+        // it. That is 28% of the sphere's solid angle for free - the measure of a
+        // sphere is uniform in y, so the threshold IS the fraction.
+        if (abs(g.y) < 0.72) {
 
-        // Glowing Gas Clouds
-        vec3 gas_uv = g * 12.0 + vec3(123.45, 678.9, 345.67);
-        float gasFBM = fbm(gas_uv, 5);
-        gasFBM = (gasFBM + 1.0) * 0.5;
-        milkyWay += gasFBM * bandShape * 0.5;
+            // Glowing Gas Clouds
+            // 4 octaves, not 5. gas_uv is g * 12 and fbm starts at frequency 8
+            // doubling each octave, so octave 5 lands at 12 * 8 * 16 = 1536
+            // cycles around the sphere. That is far under one pixel at any sane
+            // resolution, so it was contributing shimmer rather than detail.
+            vec3 gas_uv = g * 12.0 + vec3(123.45, 678.9, 345.67);
+            float gasFBM = fbm(gas_uv, 4);
+            gasFBM = (gasFBM + 1.0) * 0.5;
+            milkyWay += gasFBM * bandShape * 0.5;
 
-        // Dark Dust Lanes
-        vec3 dust_uv = g * 6.0 + vec3(456.7, 890.12, 234.56);
-        vec3 dust_distort = vec3(fbm(dust_uv + 15.5, 4),
-                                 fbm(dust_uv + 33.3, 4),
-                                 fbm(dust_uv + 51.1, 4)) * 0.3;
-        float dustFBM = fbm(dust_uv + dust_distort, 7);
-        dustFBM = (dustFBM + 1.0) * 0.5;
-        float dustMask = smoothstep(0.45, 0.7, dustFBM);
+            // Dark Dust Lanes
+            vec3 dust_uv = g * 6.0 + vec3(456.7, 890.12, 234.56);
 
-        // 4. COMBINE GALAXY LAYERS
-        milkyWay *= (1.0 - dustMask * DUST_OPACITY);
+            // 2 octaves each, not 4. This is a domain warp whose result is scaled
+            // by 0.3 and added to a coordinate - only its low frequencies displace
+            // anything visible. The old 4-octave version spent 12 of the shader's
+            // 24 total octaves here, half the entire cost, on detail that moved
+            // the sample point by a fraction of a lattice cell.
+            vec3 dust_distort = vec3(fbm(dust_uv + 15.5, 2),
+                                     fbm(dust_uv + 33.3, 2),
+                                     fbm(dust_uv + 51.1, 2)) * 0.3;
+
+            // 5 octaves, not 7. Same Nyquist argument as the gas clouds: at 6 and
+            // 7 this reached 1536 and 3072 cycles around the sphere.
+            float dustFBM = fbm(dust_uv + dust_distort, 5);
+            dustFBM = (dustFBM + 1.0) * 0.5;
+            float dustMask = smoothstep(0.45, 0.7, dustFBM);
+
+            // 4. COMBINE GALAXY LAYERS
+            milkyWay *= (1.0 - dustMask * DUST_OPACITY);
+
+        }
+
         milkyWay = max(0.0, milkyWay);
 
         // 5. COLORING THE GALAXY
@@ -287,7 +325,9 @@ void main() {
 
             // radial falloff, then a high power to pull it into a tight point
             float base = max(0.0, 1.0 - length(cellLocal) * 2.0);
-            base = pow(base, 8.0) * t * t;
+            float b2 = base * base;
+            float b4 = b2 * b2;
+            base = b4 * b4 * t * t;
 
             vec3 starTint = mix(vec3(2.0), randColor3(starCell), rand3(starCell + 123.4) * 0.7);
             starsAndStreaksColor += base * starTint;
@@ -302,7 +342,8 @@ void main() {
                 vec3 fineLocal = fract(dir * starDensity * 6.0) - 0.5;
                 float r = rand3(fineCell + 7.0);
                 float base = max(0.0, 1.0 - length(fineLocal) * 2.0);
-                base = pow(base, 6.0) * r * (0.25 * sin(iTime * (r * 5.0) + 720.0 * r) + 0.75);
+                float fb2 = base * base;
+                base = fb2 * fb2 * fb2 * r * (0.25 * sin(iTime * (r * 5.0) + 720.0 * r) + 0.75);
 
                 vec3 starTint = mix(vec3(1.0), randColor3(fineCell), rand3(fineCell + 3.3) * 0.8);
                 starsAndStreaksColor += base * starTint;
