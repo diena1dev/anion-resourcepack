@@ -26,6 +26,16 @@ layout(std140) uniform Fog {
     float FogCloudsEnd;
 };
 
+layout(std140) uniform Globals {
+    ivec3 CameraBlockPos;
+    vec3 CameraOffset;
+    vec2 ScreenSize;
+    float GlintAlpha;
+    float GameTime;
+    int MenuBlurRadius;
+    int UseRgss;
+};
+
 uniform sampler2D Sampler0;
 
 in vec3 Pos;
