@@ -1,46 +1,29 @@
 #version 330
 
+#moj_import <minecraft:fog.glsl>
 #moj_import <minecraft:dynamictransforms.glsl>
 #moj_import <minecraft:projection.glsl>
 
 in vec3 Position;
 
-out vec3 viewDir;
-
-// SkyRenderer.buildSkyDisc gives us a 10 vertex TRIANGLE_FAN: a centre at
-// (0, y, 0) and 9 rim vertices at radius 512, all at the same height, with
-// y = +16 for the sky disc and y = -16 for the dark disc.
-//
-// Two problems with using that shape as-is:
-//   - it only spans elevations past atan(16 / 512) = 1.79 degrees, so a band
-//     around the horizon has no geometry at all and shows the clear colour
-//   - the dark disc is only drawn below the horizon height (see
-//     SkyRenderer.shouldRenderDarkDisc), so above y=63 nothing covers the
-//     lower half of the sky
-//
-// So reshape the fan into a deep cone instead: centre pushed to the zenith,
-// rim ring pulled in and dropped far below the camera. The fan then covers
-// everything from straight up down to -89 degrees on its own. Each triangle
-// stays planar, so the interpolated direction is still exact per pixel.
-const float APEX_DIST = 500.0;   // fan centre, kept inside the 512 far plane
-const float RING_DROP = 456.0;   // how far below the camera the rim sits
-const float RING_SCALE = 0.015625; // 512 -> 8, the rim ring radius
+// we can have an infinite amount of `out`s in a vertex shader.
+// this is how we transfer info from the vertex pipeline to the fragment pipeline.
+out vec3 Pos;
 
 void main() {
-    float side = sign(Position.y); // +1 sky disc, -1 dark disc
 
-    vec3 p;
-    if (length(Position.xz) < 1.0) {
-        p = vec3(0.0, side * APEX_DIST, 0.0);
-    } else {
-        p = vec3(Position.x * RING_SCALE, side * -RING_DROP, Position.z * RING_SCALE);
-    }
+    vec4 view = vec4(Position, 1.0);                     // used as our view, this attaches the sky plane to the camera.
+    vec4 modView = vec4(view.x, view.z, view.y*-1, 1.0); // this swings/rotates the sky plane forward, in front of the camera.
+    vec4 clip = ProjMat * modView;                       // and then this puts the view within the clip planes.
 
-    // The sky has to stay centred on the camera, so keep the rotation but drop
-    // the translation - renderDarkDisc offsets its draw by (0, 12, 0).
-    mat4 modelView = ModelViewMat;
-    modelView[3].xyz = vec3(0.0);
+    // this is the nuanced part. since we rotated the sky plane forward and attached it to the camera,
+    // the physical verticies are no longer a suitable reference in skybox position. fortunately,
+    // we get position from an outside source, which we can multiply by our ModelViewMat (which
+    // uses fancy math to fix vectors to one point by cancelling out camera pitch and roll) to get
+    // the same sort of Position information we would have with the vanilla sky.vsh file.
+    vec4 modPos = ModelViewMat * view;
 
-    gl_Position = ProjMat * modelView * vec4(p, 1.0);
-    viewDir = p;
+    gl_Position = clip;   // this is where we pass our on-screen vector position.
+    Pos.xyz = modPos.xyz; // this passes our corrected view through to sky.fsh.
+
 }
