@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "anion:block/copper_machine/bus"
+    "model": "anion:block/copper/bus"
   }
 }

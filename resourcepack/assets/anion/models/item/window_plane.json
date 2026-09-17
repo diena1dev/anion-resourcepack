@@ -1,0 +1,31 @@
+{
+    "__comment": "Flat 1x1 plane carrying the window_ramp UV-coordinate texture. Both faces are declared so the window is visible from either side; item pipelines are backface culled, so exactly one of them draws per view.",
+    "gui_light": "front",
+    "textures": {
+        "window": "anion:item/window_ramp",
+        "particle": "anion:item/window_ramp"
+    },
+    "elements": [
+        {
+            "from": [0, 0, 7.99],
+            "to": [16, 16, 8.01],
+            "shade": false,
+            "faces": {
+                "north": { "uv": [0, 0, 16, 16], "texture": "#window", "tintindex": 0 },
+                "south": { "uv": [0, 0, 16, 16], "texture": "#window", "tintindex": 0 }
+            }
+        }
+    ],
+    "display": {
+        "fixed": {
+            "rotation": [0, 0, 0],
+            "translation": [0, 0, 0],
+            "scale": [1, 1, 1]
+        },
+        "gui": {
+            "rotation": [0, 0, 0],
+            "translation": [0, 0, 0],
+            "scale": [1, 1, 1]
+        }
+    }
+}

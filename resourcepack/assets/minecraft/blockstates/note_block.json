@@ -163,28 +163,24 @@
       "model": "anion:block/debug/conduit"
     },
     "instrument=creeper,note=4,powered=false": {
-      "model": "anion:block/item_pipe",
-      "x": 90,
-      "y": 90
+      "model": "anion:block/item_pipe_horizontal"
     },
     "instrument=creeper,note=4,powered=true": {
-      "model": "anion:block/item_pipe",
-      "x": 90,
-      "y": 90
+      "model": "anion:block/item_pipe_horizontal"
     },
     "instrument=creeper,note=5,powered=false": {
-      "model": "anion:block/item_pipe"
+      "model": "anion:block/item_pipe_vertical"
     },
     "instrument=creeper,note=5,powered=true": {
-      "model": "anion:block/item_pipe"
+      "model": "anion:block/item_pipe_vertical"
     },
     "instrument=creeper,note=6,powered=false": {
-      "model": "anion:block/item_pipe",
-      "x": 90
+      "model": "anion:block/item_pipe_horizontal",
+      "y": 90
     },
     "instrument=creeper,note=6,powered=true": {
-      "model": "anion:block/item_pipe",
-      "x": 90
+      "model": "anion:block/item_pipe_horizontal",
+      "y": 90
     }
   }
 }

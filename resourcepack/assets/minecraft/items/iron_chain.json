@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "anion:block/copper/conduit"
+    "model": "anion:block/data_wire"
   }
 }

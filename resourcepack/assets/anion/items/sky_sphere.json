@@ -1,0 +1,12 @@
+{
+    "model": {
+        "type": "minecraft:model",
+        "model": "anion:item/sky_sphere",
+        "tints": [
+            {
+                "type": "minecraft:dye",
+                "default": 6967216
+            }
+        ]
+    }
+}
