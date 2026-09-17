@@ -4,6 +4,8 @@
 #moj_import <minecraft:globals.glsl>
 #moj_import <minecraft:dynamictransforms.glsl>
 
+#moj_import <anion:slipspace.glsl>
+
 //==========================================================================//
 // these are the values we get by importing globals.glsl.
 //
@@ -27,13 +29,6 @@ out vec4 fragColor;
 // TODO: seperate helper functions into an include file when possible.
 void main() {
 
-    // this gets us a color based on the distance from the center of the world.
-    // if we export Position from sky.vsh we can get a position map of the entire skybox!
-    //vec3 color = normalize(vec3(CameraBlockPos.x, CameraBlockPos.y, CameraBlockPos.z));
-    
-    // this is an example of how we can read FogColor (available through fog.glsl) to set the sky color!
-    // fragColor = FogColor;
-
     // daytime detection- might break with custom sky colors!
     float dayFactor = max(max(ColorModulator.r, ColorModulator.g), ColorModulator.b);
 
@@ -41,5 +36,10 @@ void main() {
     vec3 day   = ColorModulator.rgb;
 
     fragColor = vec4(mix(night, day, dayFactor), 1.0);
+
+    // slipspace
+    if (FogColor.x >= 0.9) {
+        fragColor.xyz = slipspace(Pos, GameTime * 1200.);
+    }
 
 }
